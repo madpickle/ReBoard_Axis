@@ -1,0 +1,33 @@
+<html>
+<head>
+<script language="JavaScript" src="MessageBoard.js">
+</script>
+</head>
+<body>
+<h1>Simple MessageBoard client example</h1>
+<h2>Message Type: <span id="msgType">Unknown</span></h2>
+<h2>Text:</h2>
+<span id="text"></span>
+
+<script language="JavaScript">
+
+var client = MessageBoardClient("localhost:8010");
+
+function handler(msg) {
+    msgType.innerText = msg["msgType"];
+    try {
+       text.innerText = msg["text"];
+    }
+    catch (err) {
+    }
+}
+
+client.setDebugLevel(2);
+client.registerHandler(handler);
+client.setPollingInterval(1.0);
+client.start();
+</script>
+
+</body>
+</html>
+

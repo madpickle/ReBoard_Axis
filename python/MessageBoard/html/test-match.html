@@ -1,0 +1,39 @@
+<html>
+<head>
+<script language="JavaScript" src="MessageBoard.js">
+</script>
+</head>
+<body>
+
+<script language="JavaScript">
+
+client = MessageBoardClient();
+client.setDebugLevel(3);
+
+mb_testStringMatches("foo", "foo");
+mb_testStringMatches("foo", "bar");
+mb_testStringMatches("foo*", "foo");
+mb_testStringMatches("foo*", "fo");
+mb_testStringMatches("", "foo");
+mb_testStringMatches("", "");
+mb_testStringMatches("*", "foo");
+mb_testStringMatches("*", "");
+mb_testStringMatches("chat.*", "chat.foo");
+mb_testStringMatches("chat.*", "chats.foo");
+mb_testStringMatches("chat.*", "chats.xyz");
+mb_testStringMatches("c*", "x");
+mb_testStringMatches("cc*", "x");
+report("");
+mb_testMatches(Pattern("msgType", "chat.*"),
+          Message("msgType", "chat.ping", "userName", "don"));
+mb_testMatches(Pattern("msgType", "chat.*"),
+          Message("msgType", "mb_test.ping", "userName", "don"));
+mb_testMatches(Pattern("msgType", "chat.*", "channel", "chan1"),
+          Message("msgType", "chat.status", "userName", "don"));
+mb_testMatches(Pattern("msgType", "chat.*", "channel", "chan1"),
+          Message("msgType", "chat.status", "channel", "chan1"));
+
+
+</script>
+</body>
+</html>

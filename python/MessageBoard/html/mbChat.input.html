@@ -1,0 +1,56 @@
+<html>
+<head>
+<script language="JavaScript" src="MessageBoard.js">
+</script>
+</head>
+<body>
+<script language="JavaScript">
+
+var client = MessageBoardClient("localhost:8010");
+
+function handler(msg) {
+    var  msgType = msg["msgType"];
+    if (msgType == "chat.addTextLine") {
+        var userName = msg["userName"];
+        var text = msg["text"];
+        var str = "<b>"+userName+": &nbsp; </b><pre>"+text+"</pre>\n<p>\n";
+        top.outputWin.document.write(str+"\n");
+    }
+}
+
+client.setDebugLevel(0);
+client.registerHandler(handler);
+client.setPollingInterval(1.0);
+client.start();
+var channel = "imcom";
+var userName = "joe";
+var clientName = "joe_javascript";
+var clientHost = "unknown";
+
+function getUserName() { return userName; }
+function getClientName() { return clientName; }
+
+function sendText()
+{
+    var str = form1.inputText.value;
+    client.sendMessage("msgType", "chat.addTextLine",
+                       "channel", channel,
+                       "userName", getUserName(),
+                       "clientName", getClientName(),
+                       "clientHost", clientHost,
+                       "text", str);
+}
+
+</script>
+
+<h1>Input:</h1>
+<form name="form1">
+<TEXTAREA NAME="inputText" ROWS=4 COLS=60>
+This is were you type text...
+</TEXTAREA><br>
+<input name="button1" value="Send" type="Button" onClick="sendText(); return false;">
+
+</form>
+</body>
+</html>
+

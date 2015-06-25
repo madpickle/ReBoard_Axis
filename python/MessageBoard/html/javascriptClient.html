@@ -1,0 +1,49 @@
+<html>
+<head>
+<script language="JavaScript" src="MessageBoard.js">
+</script>
+<script language="JavaScript">
+
+function handler1(msg) {
+    report("handler1:");
+    mb_dumpMessage(msg);
+}
+
+function handler2(msg) {
+    report("handler2:");
+    mb_dumpMessage(msg);
+}
+
+var client = MessageBoardClient("localhost:8010");
+client.setDebugLevel(1);
+var msg = Message("msgType", "test.bar");
+msg['color'] = 'red';
+client.registerHandler(handler1,
+                       Pattern("msgType", "test*"));
+client.registerHandler(handler2,
+                       Pattern("msgType", "ping*"));
+client.dumpMessage(msg)
+
+</script>
+</head>
+<body>
+<h3>JavaScript MessageBoard client</h3>
+<form name="startForm">
+<input type=Button value="Start Push Client"
+       onClick="client.startServerPush();">
+<input type=Button value="Start Polling Client"
+       onClick="client.startPolling();">
+<input type=Button value="Start Polling Client (XML)"
+       onClick="client.startPollingXML();">
+<input type=Button value="Stop Client"
+       onClick="client.stop();">
+<p>
+<input type=Button value="Send Message (type=test)"
+       onClick="client.sendMessage(msg);">
+<input type=Button value="Send Message (type=ping)"
+       onClick="client.sendMessage('msgType', 'ping', 'value', 25);">
+<input type=Button value="Send Message (type=foo)"
+       onClick="client.sendMessage('msgType', 'foo', 'color', 'green');">
+</form>
+</body>
+</html>

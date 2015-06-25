@@ -1,0 +1,13 @@
+{
+  "#imageSize": "image size of the calibration. [width, height] (pixel)",
+  "imageSize": [2048, 1536],
+
+  "#principalPoint": "principal point. [x, y] (pixel)",
+  "principalPoint": [1.054939e+003, 7.719462e+002],
+
+  "#focalLength": "focal length. [x, y] (pixel)",
+  "focalLength": [1.920122e+003, 1.919863e+003],
+
+  "#distortion": "lens distortion parameters (4 digits)",
+  "distortion": [-4.320997e-001, 2.265051e-001, -9.759330e-005, 1.004127e-004]
+}

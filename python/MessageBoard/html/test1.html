@@ -1,0 +1,143 @@
+<html>
+<head>
+<script language="JavaScript">
+var comNo = 0;
+function handleClick(val)
+{
+   comNo++;
+   url="http://localhost:8010/postMessage?msgType=test&method=onClick&val="+val+"&comNo="+comNo;
+   open(url, "results");
+}
+</script>
+</head>
+<body>
+<h3>Sending messages using links and URL's</h3>
+The simplest way to post messages is to access the server with a URL that specifies
+the message as a query string:
+<p>
+<a href="http://localhost:8010/postMessage?msgType=test&id=1" target="results">Message 1</a>
+<br>
+<a href="http://localhost:8010/postMessage?msgType=test&id=2" target="results">Message 2</a>
+<br>
+<a href="http://localhost:8010/postMessage?msgType=myapp.fill&color=red" target="results">Message 3</a>
+<p>
+Which is setup using anchor tags looking like this:
+<ul>
+<p>&lt;a href="http://localhost:8010/postMessage?msgType=test&amp;id=1"
+target="results">Message 1&lt;/a>
+<br>&lt;br>
+<br>&lt;a href="http://localhost:8010/postMessage?msgType=test&amp;id=2"
+target="results">Message 2&lt;/a>
+<br>&lt;br>
+<br>&lt;a href="http://localhost:8010/postMessage?msgType=myapp.fill&amp;color=red"
+target="results">Message 3&lt;/a>
+</ul>
+Note the target="results" tag.  That is so that the current page is not replaced
+by the reply from the message board to the posted message.  It is the name of another
+window or frame.   For this tutorial, it is the frame at the bottom of the browswer,
+so when you click on those links, you should see the return information send back
+by the MessageBoard server.
+<h3>Sending messages from JavaScript</h3>
+
+To send messages from javascript, you can define a function and bind it to events, such as the onClick event.  Here is an example:
+<ul>
+&lt;script language="JavaScript">
+<br>var comNo = 0;
+<br>function handleClick(val)
+<br>{
+<br>&nbsp;&nbsp; comNo++;
+<br>&nbsp;&nbsp; url="http://localhost:8010/postMessage?msgType=test&amp;method=onClick&amp;val="+val+"&amp;comNo="+comNo;
+<br>&nbsp;&nbsp; open(url, "results");
+<br>}
+<br>&lt;/script>
+
+</ul>
+Which generates this appearance in the HTML page:
+<br>
+<a href="" target="results" onClick="handleClick(1); return false;">Click 1</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="" target="results" onClick="handleClick(2); return false;">Click 2</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<form name="test1">
+<input name="button1" value="Hello" type="Button" onClick="handleClick(3); return false;">
+</form>
+<em>Note: the web browswer may cache pages and not do this on subsequent times.</em>
+
+<h3>Sending messages using Forms and POST</h3>
+It is also possible to send messages directly from a form, using the POST method.
+Here is an example.  The named fields of the form will be used as the named fields
+of the messages sent.  The message should have a "msgType" field.  This could be
+in an text field that the user enters, but probably normallly would be a hiddle
+field like this
+<ul>
+&lt;input name="msgType" value="test.post" type="hidden">
+</ul>
+<b>Form:</b><br>
+<form name="foobar" action="http://localhost:8010/postMessage" method="POST" target="results">
+<input name="msgType" value="test.post" type="hidden">
+Field1: <input name="field1" type="text"><br>
+Field2: <input name="field2" value="truckee" type="text"><br>
+Comment:<br>
+<TEXTAREA NAME="text" ROWS=4 COLS=40>
+Here is some room for various lines of text, that should still
+get sent over.
+</TEXTAREA><br>
+<input name="sendbutton" value="Send" type="submit"><br>
+<input name="field3" value="don" type="hidden">
+</form>
+<br>
+Here is the HTML code used for this example:
+<ul>
+&lt;form name="form1" action="http://localhost:8010/postMessage" method="POST"
+target="results">
+<br>&lt;input name="msgType" value="test.post" type="hidden">
+<br>Field1: &lt;input name="field1" type="text">&lt;br>
+<br>Field2: &lt;input name="field2" value="truckee" type="text">&lt;br>
+<br>Comment:&lt;br>
+<br>&lt;TEXTAREA NAME="text" ROWS=4 COLS=40>
+<br>Here is some room for various lines of text, that should still
+<br>get sent over.
+<br>&lt;/TEXTAREA>&lt;br>
+<br>&lt;input name="sendbutton" value="Send" type="submit">&lt;br>
+<br>&lt;input name="field3" value="don" type="hidden">
+<br>&lt;/form>
+<br>&nbsp;
+</ul>
+
+<h3>MessageBoard URL's:</h3>
+<table>
+<tr><td>
+http://server:8010/status
+</td>
+<td>
+Show status information about this MessageBoard
+</td></tr>
+<tr><td>
+http://server:8010/help
+</td>
+<td>
+Show this help information.
+</td></tr>
+<tr><td>
+http://server:8010/watchMessages" target="other">
+<td>
+Print all messages to this browser...
+</td></tr>
+<tr><td>
+http://server:8010/watchMessages?field1=val1&field2=val2...
+<td>
+Watch all messages that match the given values.
+</td></tr>
+<tr><td>
+http://server:8010/sendMessage?msgType=test.ping
+<td>
+Send a test message of type "test.ping".
+</td></tr>
+<tr><td>
+http://server:8010/sendMessage?field1=val1&field2=val2...
+<td>
+Send a message with the specified field values.
+</td></tr>
+</table>
+</body>
+</html>
